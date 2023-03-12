@@ -12,6 +12,7 @@ const useRankStore = defineStore('rank', {
     async fetchRankInfosData(sportId) {
       const res = await getRankInfos(sportId)
       this.rankInfos = res.data
+      console.log(res.data)
     }
   }
 })

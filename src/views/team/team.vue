@@ -6,7 +6,7 @@
         <h2 class="name">选择项目</h2>
         <div class="project-inner">
           <FormItem label="团队项目">
-            <Select v-model="formRef.project.value" style="width:410px">
+            <Select v-model="formRef.sportId.value" :on-change="changeProject()" style="width:410px">
               <Option v-for="item in teamProjectData.sportList" :value="item.value" :key="item.value">{{ item.label }}</Option>
             </Select>
           </FormItem>
@@ -15,7 +15,6 @@
           </div>
         </div>
       </div>
-      
 
       <div class="info top">
         <div class="info-title">
@@ -27,7 +26,7 @@
             <FormItem :label="'团队编号' + Number(index + 1)">
               <Row>
                 <Col>
-                  <Input v-model="item.number" placeholder="团队编号" style="width: 275px"/>
+                  <Input v-model="item.id" placeholder="团队编号" style="width: 275px"/>
                 </Col>
                 <Col>
                   <Input v-model="item.score" placeholder="成绩" style="width: 275px"/>
@@ -60,31 +59,35 @@ const currentIndex = ref(1)
 
 // 响应式
 const formData = reactive({
-  project: "",
+  sportId: "",
   infos: [
     {
-      number: "",
+      sportId: "",
+      id: "",
       score: "",
-      index: 1,
     },
   ]
 })
 const formRef = toRefs(formData)  // 响应式
 
+// 选择项目完成后触发
+const changeProject = () => {
+  formData.infos[0].sportId = formRef.sportId.value
+}
+
 // 添加数据
 const addBtnClick = () => {
   currentIndex.value++
   formData.infos.push({
-    number: "",
+    sportId: formRef.sportId.value,
+    id: "",
     score: "",
-    index: currentIndex.value,
-    show: 1
   })
   
   console.log("添加一条信息", formData.infos)
 }
 
-// 删除
+// 删除数据
 const deleteBtn = (index) => {
   formData.infos.splice(index, 1)
   console.log("删除一条信息",formData.infos)
@@ -92,31 +95,41 @@ const deleteBtn = (index) => {
 
 const router = useRouter()
 
-// 提交
+// 提交表单
 const submit = () => {
   console.log(formData)
   console.log("已提交")
-  // router.go(0)  // 刷新页面
-  // alert("提交成功")
+
   YXrequest.post({
     url: "/SportInfo/submit/down",
-    data: formData
+    data: formData.infos
   }).then(res => {
     console.log(res);
+    downloadExcel(res.data)
+
+    alert("提交成功")
+    router.go(0)  // 刷新页面
+
   })
 }
 
-// 下载
+// 下载所有项目的表格
 const download = () => {
-
-  console.log("下载" + formData.project + "号项目excel表格")
-
+  // 发送数据
   YXrequest.get({
-    url: `/Excel/download/${formData.project}`,
-  }).then(response => {
-      console.log(response);
-})
+    url: `/Excel/download/${formData.sportId}`,
+  }).then(res => {
+    console.log(res);
+    downloadExcel(res.data)
 
+  })
+  
+  console.log("下载" + formData.sportId + "号项目Excel表格")
+}
+
+const downloadExcel = (UUID) => {
+  console.log("111", UUID)
+  window.open(`http://192.168.116.17:8080/Excel/download/getExcel/${UUID}`)
 }
 
 </script>

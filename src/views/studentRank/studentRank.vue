@@ -1,9 +1,10 @@
 <template>
+
   <div class="rank title-center">
-    <h2 class="project-title ">项目排名查询</h2>
+    <h2 class="project-title ">学生项目排名查询</h2>
     <div class="project top">
       <h2 class="name">选择项目</h2>
-      <Select v-model="project" style="width:600px">
+      <Select v-model="sportId" style="width:600px">
         <OptionGroup label="个人径赛">
           <Option v-for="item in allSportsData.sportList1" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </OptionGroup>
@@ -37,7 +38,7 @@
               <td>{{ item.specialty }}</td>
               <td>{{ item.classes }}</td>
               <td>{{ item.score }}</td>
-              <td>{{ item.rank }}</td>
+              <td>{{ item.ranking }}</td>
             </tr>
           </template>
         </tbody>
@@ -58,9 +59,9 @@
             <tr>
               <td>{{ item.department }}</td>
               <td>{{ item.specialty }}</td>
-              <td>{{ item.class }}</td>
+              <td>{{ item.classes }}</td>
               <td>{{ item.score }}</td>
-              <td>{{ item.rank }}</td>
+              <td>{{ item.ranking }}</td>
             </tr>
           </template>
         </tbody>
@@ -79,29 +80,29 @@ import { ref } from "vue";
 import mockRank from "@/mock/mock-rank"  // 引入模拟的数据
 import personalColumns from "@/assets/data/personal-rank-columns"
 import teamColumns from "@/assets/data/team-rank-columns"
-import YXrequest from '@/services/request';
+
 
 const rankStore = useRankStore()
 const { rankInfos } = storeToRefs(rankStore)
 
 console.log(rankInfos)
 
-const project = ref()
+const sportId = ref()
 let isShowPersonalList = ref(false)
 let isShowTeamList = ref(false)
 
   // 提交项目id查询成绩
 const submit = () => {
-  const sportId = project.value
+  const sportIdd = sportId.value
 
-  console.log(sportId)
-  if (sportId < 23) {
+  console.log(sportIdd)
+  if (sportIdd < 23) {
 
     if(isShowTeamList.value === true) isShowTeamList.value = !isShowTeamList.value
     if(isShowPersonalList.value === true) return
     isShowPersonalList.value = !isShowPersonalList.value
 
-  } else if(sportId >= 23) {
+  } else if(sportIdd >= 23) {
 
     if(isShowPersonalList.value === true) isShowPersonalList.value = !isShowPersonalList.value
     if(isShowTeamList.value === true) return
@@ -109,24 +110,18 @@ const submit = () => {
 
   }
 
-  console.log("已提交", project.value)
+  console.log("已提交", sportId.value)
 
-  // 调用pinia中封装的fetchRankInfosData
-  // rankStore.fetchRankInfosData(project.value)
+  // 调用pinia中封装的fetchRankInfosData方法,更改rankinfo文件中存储的排名信息
+  rankStore.fetchRankInfosData(sportId.value)
 
-
-//   YXrequest.get({
-//     url: "/SportInfo/personal/1",
-//   }).then(res=> {
-//       console.log(res);
-//       rankInfos.value = res.data
-// })
 }
 
 </script>
 
 <style lang="less" scoped>
 table {
+  
   border-collapse: collapse;
 
   tr {
@@ -142,12 +137,12 @@ table {
 
   thead {
   background-color: #f8f8f9;
-  font-size: 24px;
+  font-size: 20px;
   }
 }
 .rank-info {
-  margin-top: 44px;
-  font-size: 22px;
+  margin: 44px 0;
+  font-size: 16px;
 }
 </style>
 

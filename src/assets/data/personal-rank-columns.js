@@ -1,7 +1,7 @@
 const columns = [
   // 个人表头
   {
-    title: '名称',
+    title: '姓名',
     key: 'name'
   },
   {
