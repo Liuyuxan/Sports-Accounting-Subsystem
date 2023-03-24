@@ -1,10 +1,10 @@
 <template>
 
   <div class="rank title-center">
-    <h2 class="project-title ">学生项目排名查询</h2>
+    <h2 class="project-title ">学生项目成绩查询</h2>
     <div class="project top">
       <h2 class="name">选择项目</h2>
-      <Select v-model="sportId" style="width:600px">
+      <Select v-model="sportId" style="width:550px">
         <OptionGroup label="个人径赛">
           <Option v-for="item in allSportsData.sportList1" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </OptionGroup>
@@ -15,28 +15,38 @@
           <Option v-for="item in allSportsData.sportList3" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </OptionGroup>
       </Select>
+      
+      <h2 class="matchType">选择赛区</h2>
+      <Select v-model="matchType" style="width:550px">
+        <Option v-for="item in infoType.matchType" :value="item.value" :key="item.value">{{ item.label }}</Option>
+      </Select>
     </div>
-    <div class="submit">
-      <Button type="primary" class="btn" @click="submit" style="width: 100px;">查询</Button>
+    <div class="button">
+      <div class="submit">
+        <Button type="primary" class="btn" @click="search" style="width: 100px;">查询</Button>
+      </div>
+      <div class="download">
+        <Button type="primary" class="btn" @click="download" style="width: 100px;">下载Excel</Button>
+      </div>
     </div>
-
     <!-- 查询后的表格展示 -->
-    <div v-if="isShowPersonalList" class="rank-info">
+    <!-- 个人径赛 -->
+    <div v-if="isShowPersonalTrackList" class="rank-info">
       <table>
         <thead>
           <tr>
-            <template v-for="item in personalColumns" :key="item.key">
+            <template v-for="item in personalTrackColumns" :key="item.key">
               <th>{{ item.title }}</th>
             </template>
           </tr>
         </thead>
         <tbody>
-          <template v-for="item in rankInfos" :key="item.id">
+          <template v-for="item in studentRankInfos" :key="item.id">
             <tr>
               <td>{{ item.name }}</td>
               <td>{{ item.department }}</td>
-              <td>{{ item.specialty }}</td>
-              <td>{{ item.classes }}</td>
+              <!-- <td>{{ item.specialty }}</td>
+              <td>{{ item.classes }}</td> -->
               <td>{{ item.score }}</td>
               <td>{{ item.ranking }}</td>
             </tr>
@@ -44,8 +54,32 @@
         </tbody>
       </table>
     </div>
-
-    <div v-if="isShowTeamList" class="rank-info">
+    <!-- 个人田赛 -->
+    <div v-if="isShowPersonalFieldEventsList" class="rank-info">
+      <table>
+        <thead>
+          <tr>
+            <template v-for="item in personalFieldEventsList" :key="item.key">
+              <th>{{ item.title }}</th>
+            </template>
+          </tr>
+        </thead>
+        <tbody>
+          <template v-for="item in studentRankInfos" :key="item.id">
+            <tr>
+              <td>{{ item.name }}</td>
+              <td>{{ item.department }}</td>
+              <!-- <td>{{ item.specialty }}</td>
+              <td>{{ item.classes }}</td> -->
+              <td>{{ item.score }}</td>
+              <td>{{ item.ranking }}</td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </div>
+    <!-- 团队比赛 -->
+    <div v-if="isShowTeamTrackList" class="rank-info">
       <table>
         <thead>
           <tr>
@@ -55,11 +89,9 @@
           </tr>
         </thead>
         <tbody>
-          <template v-for="item in rankInfos" :key="item.id">
+          <template v-for="item in studentRankInfos" :key="item.id">
             <tr>
               <td>{{ item.department }}</td>
-              <td>{{ item.specialty }}</td>
-              <td>{{ item.classes }}</td>
               <td>{{ item.score }}</td>
               <td>{{ item.ranking }}</td>
             </tr>
@@ -74,47 +106,82 @@
 
 <script setup>
 import allSportsData from "@/assets/data/all-sports"
-import useRankStore from "@/stores/modules/rankInfos";
+import useInfoStore from "@/stores/modules/infos"
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
 import mockRank from "@/mock/mock-rank"  // 引入模拟的数据
-import personalColumns from "@/assets/data/personal-rank-columns"
-import teamColumns from "@/assets/data/team-rank-columns"
+import personalTrackColumns from "@/assets/data/personal-track-rank-columns"
+import personalFieldEventsList from "@/assets/data/personal-fieldevents-rank-columns"
+import teamColumns from "@/assets/data/team-track-rank-columns"
+import infoType from "@/assets/data/type"
+import YXrequest from '@/services/request';
 
-
-const rankStore = useRankStore()
-const { rankInfos } = storeToRefs(rankStore)
-
-console.log(rankInfos)
+const infoStore = useInfoStore()
+const { studentRankInfos } = storeToRefs(infoStore)
 
 const sportId = ref()
-let isShowPersonalList = ref(false)
-let isShowTeamList = ref(false)
+const matchType = ref()
 
-  // 提交项目id查询成绩
-const submit = () => {
+let isShowPersonalTrackList = ref(false)
+let isShowPersonalFieldEventsList = ref(false)
+let isShowTeamTrackList = ref(false)
+
+
+  // 查询
+const search = () => {
   const sportIdd = sportId.value
+  showColumns(sportIdd)
 
-  console.log(sportIdd)
-  if (sportIdd < 23) {
-
-    if(isShowTeamList.value === true) isShowTeamList.value = !isShowTeamList.value
-    if(isShowPersonalList.value === true) return
-    isShowPersonalList.value = !isShowPersonalList.value
-
-  } else if(sportIdd >= 23) {
-
-    if(isShowPersonalList.value === true) isShowPersonalList.value = !isShowPersonalList.value
-    if(isShowTeamList.value === true) return
-    isShowTeamList.value = !isShowTeamList.value
-
-  }
-
-  console.log("已提交", sportId.value)
+  console.log("项目：", sportId.value, "赛区：", matchType.value)
 
   // 调用pinia中封装的fetchRankInfosData方法,更改rankinfo文件中存储的排名信息
-  rankStore.fetchRankInfosData(sportId.value)
+  infoStore.fetchStudentRankInfosData(sportId.value, matchType.value)
+}
 
+// 下载Excel
+const download = () => {
+  console.log("下载,项目：", sportId.value, "赛区:", matchType.value)
+  // 发送数据
+  YXrequest.get({
+    url: `/Excel/download/${sportId.value}/${matchType.value}/学生`,
+  }).then(res => {
+    console.log("res:", res);
+    downloadExcel(res.data)
+
+  }).catch(err => {
+    console.log("err:", err)
+  })
+  
+}
+
+const downloadExcel = (UUID) => {
+  console.log("UUID:", UUID)
+  window.open(`http://10.0.6.17:8080/Excel/download/getExcel/${UUID}`)
+}
+
+// 展示表头字段
+const showColumns = (sportIdd) => {
+  if (sportIdd <= 12) {
+    if(isShowPersonalTrackList.value === true) return
+
+    isShowPersonalTrackList.value = true
+    isShowTeamTrackList.value = false
+    isShowPersonalFieldEventsList.value = false
+
+  }else if(sportIdd > 12 && sportIdd < 23) {
+    if(isShowPersonalFieldEventsList.value === true) return
+
+    isShowPersonalFieldEventsList.value = true
+    isShowPersonalTrackList.value = false
+    isShowTeamTrackList.value = false
+
+  } else if(sportIdd >= 23) {
+    if(isShowTeamTrackList.value === true) return
+
+    isShowTeamTrackList.value = true
+    isShowPersonalTrackList.value = false
+    isShowPersonalFieldEventsList.value = false
+  }
 }
 
 </script>
@@ -144,5 +211,13 @@ table {
   margin: 44px 0;
   font-size: 16px;
 }
+.matchType {
+  margin-top: 22px;
+}
+.button {
+  display: flex;
+  .btn {
+    margin: 0 20px;
+  }
+}
 </style>
-

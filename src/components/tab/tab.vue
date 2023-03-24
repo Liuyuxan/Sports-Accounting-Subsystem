@@ -1,6 +1,6 @@
 <template>
   <div class="tab-bar">
-    <Menu theme="light" :active-name="activeName">
+    <Menu theme="light" :active-name="activeName" >
       <MenuGroup title="提交成绩">
         <MenuItem name="/personal" to="/personal">
           <Icon type="ios-man" />
@@ -19,6 +19,24 @@
         <MenuItem name="/teacherRank" to="/teacherRank">
           <Icon type="ios-search" />
           教职工项目排名查询
+        </MenuItem>
+      </MenuGroup>
+      <MenuGroup title="增加数据">
+        <MenuItem name="/addStudentSportsMan" to="/addStudentSportsMan">
+          <Icon type="md-person-add" />
+          增加学生运动员
+        </MenuItem>
+        <MenuItem name="/addTeacherSportsMan" to="/addTeacherSportsMan">
+          <Icon type="md-person-add" />
+          增加职工运动员
+        </MenuItem>
+        <MenuItem name="/addStudentTeam" to="/addStudentTeam">
+          <Icon type="md-add" />
+          增加学生团队
+        </MenuItem>
+        <MenuItem name="/addTeacherTeam" to="/addTeacherTeam">
+          <Icon type="md-add" />
+          增加职工团队
         </MenuItem>
       </MenuGroup>
     </Menu>

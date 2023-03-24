@@ -1,11 +1,19 @@
 .title-center {
+  
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  margin-top: 30px;
+  margin-top: -400px;
+  margin-left: 190px;
 }
+
+/* .center {
+  position: absolute;
+  top: 15%;
+  left: 15%;
+} */
 
 .project-title {
   font-size: 32px;
@@ -20,7 +28,7 @@
   margin-top: 20px;
 }
 
-.submit {
+.submit, .download {
   margin-top: 44px;
 }
 

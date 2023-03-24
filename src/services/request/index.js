@@ -30,6 +30,11 @@ class YXRequest {
   post(config) {
     return this.request({ ...config, method: "post" })
   }
+
+  // 封装delete请求
+  delete(config) {
+    return this.request({ ...config, method: "delete" })
+  }
   
 }
 
