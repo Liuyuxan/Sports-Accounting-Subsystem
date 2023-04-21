@@ -1,28 +1,28 @@
 <template>
   <div class="team title-center center">
-    <h2 class="project-title ">团队项目</h2>
+    <h2 class="project-title ">团队项目成绩提交</h2>
     <Form ref="formData" :model="formData.value" :label-width="80" style="width: 1000px">
       <div class="project top">
         <h2 class="name">选择信息</h2>
         <div class="project-inner">
 
           <FormItem label="项目">
-            <Select v-model="formRef.sportId.value" @on-change="selectProject" style="width:250px">
+            <Select v-model="formRef.sportId.value" @on-change="selectProject" style="width:420px">
               <Option v-for="item in teamProjectData.sportList" :value="item.value" :key="item.value">{{ item.label }}</Option>
             </Select>
           </FormItem>
 
           <FormItem label="身份">
-            <Select v-model="formRef.status.value" @on-change="selectStatus" style="width:250px">
+            <Select v-model="formRef.status.value" @on-change="selectStatus" style="width:420px">
               <Option v-for="item in infoType.status" :value="item.value" :key="item.value">{{ item.label }}</Option>
             </Select>
           </FormItem>
 
-          <FormItem label="赛区">
+          <!-- <FormItem label="赛区">
             <Select v-model="formRef.matchType.value" @on-change="selectMatchType" style="width:250px">
               <Option v-for="item in infoType.matchType" :value="item.value" :key="item.value">{{ item.label }}</Option>
             </Select>
-          </FormItem>
+          </FormItem> -->
 
         </div>
       </div>
@@ -43,12 +43,12 @@
               </Col>
               <Col>
                 <FormItem :label="'团队:'">
-                  <Input v-model="item.department" placeholder="学院" style="width: 250px" :readonly="isReadonly" />
+                  <Input v-model="item.department" placeholder="学院\团队" style="width: 250px" :readonly="isReadonly" />
                 </FormItem>
               </Col>
               <Col>
                 <FormItem :label="'成绩:'">
-                  <Input v-model="item.score" placeholder="成绩" style="width: 210px"/>
+                  <Input v-model="item.scores" placeholder="成绩" style="width: 210px"/>
                 </FormItem>
               </Col>
               <Col>
@@ -96,7 +96,7 @@ const formData = reactive({
       id: "",
       department: "",
       name: "",
-      score: "",
+      scores: "",
     },
   ]
 })
@@ -114,21 +114,21 @@ const selectStatus = () => {
   console.log("身份已选择")
   requestInfo()
 }
-const selectMatchType = () => {
-  formData.infos[0].matchType = formRef.matchType.value
-  console.log("赛区已选择")
-  requestInfo()
-}
+// const selectMatchType = () => {
+//   formData.infos[0].matchType = formRef.matchType.value
+//   console.log("赛区已选择")
+//   requestInfo()
+// }
 const requestInfo = () => {
-  if(flag !== 3) flag ++
-  if(flag === 3) {
+  if(flag !== 2) flag ++
+  if(flag === 2) {
     console.log("全部选择完成")
 
     const sportId = formRef.sportId.value
     const matchType = formRef.matchType.value
     const status = formRef.status.value
 
-    infoStore.fetchTeamInfosData(sportId, matchType, status).then(res => {
+    infoStore.fetchTeamInfosData(sportId, 1, status).then(res => {
       formData.infos = teamInfos.value.infos  // 将响应式渲染到模板上的数组替换成网络请求到的数组
     })
 
@@ -183,11 +183,10 @@ async function submit() {
 
   // 循环判断成绩有数据的，只提交写了成绩的数据
   for (const item of formData.infos) {
-    console.log(item.score)
-    if(item.score) {
+    console.log(item.scores)
+    if(item.scores) {
       result.push(item)
     }
-    console.log("每次result:", result)
   }
   console.log("提交的数组：", result)
 

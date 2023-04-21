@@ -40,7 +40,7 @@
                   <!-- <FormItem :label="'学号'+ Number(index + 1)"> -->
                   <FormItem :label="'学号:'">
                     <!-- 如果要把增加，删除按钮打开，请把输入框宽度改成266px -->
-                    <Input v-model="item.id" placeholder="学号" style="width: 450px" />    
+                    <Input v-model="item.numbers" placeholder="学号" style="width: 450px" />    
                   </FormItem>
                 </Col>
                 <Col>
@@ -96,7 +96,7 @@ const formData = reactive({
       sportId: "",
       type: "学生", // 人员类别
       classify: "", // 0为预赛，1为决赛(比赛类型)
-      id: "", // 学号
+      numbers: "", // 学号
       name: "", // 姓名
       sex: "", // 性别
       department: "", // 学院
@@ -126,7 +126,7 @@ const addBtnClick = () => {
     sportId: formRef.sportId.value,
     type: formRef.type.value,
     classify: formRef.classify.value,
-    id: "",
+    numbers: "",
     name: "",
     sex: "",
     department: "",

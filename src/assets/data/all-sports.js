@@ -33,14 +33,6 @@ const personalProjectData = {
       label: '女子800米'
     },
     {
-      value: 21,
-      label: '男子1000米'
-    },
-    {
-      value: 22,
-      label: '女子1000米'
-    },
-    {
       value: 9,
       label: '男子1500米'
     },
@@ -82,10 +74,18 @@ const personalProjectData = {
     },
     {
       value: 19,
-      label: '男子铅球'
+      label: '男子立定跳远'
     },
     {
       value: 20,
+      label: '女子立定跳远'
+    },
+    {
+      value: 21,
+      label: '男子铅球'
+    },
+    {
+      value: 22,
       label: '女子铅球'
     },
     {
@@ -94,7 +94,7 @@ const personalProjectData = {
     },
     {
       value: 24,
-      label: '女子*100米'
+      label: '女子4*100米'
     },
     {
       value: 25,
@@ -106,19 +106,15 @@ const personalProjectData = {
     },
     {
       value: 27,
-      label: '旋风跑'
+      label: '男女混合4*100米'
     },
     {
       value: 28,
-      label: '八人九足'
+      label: '悦“綦”飞兔'
     },
     {
       value: 29,
-      label: '男女混合4*400米'
-    },
-    {
-      value: 30,
-      label: '男女混合4*400米'
+      label: '挑战“NO1”'
     },
   ],
   sportList1: [
@@ -153,14 +149,6 @@ const personalProjectData = {
     {
       value: 8,
       label: '女子800米'
-    },
-    {
-      value: 21,
-      label: '男子1000米'
-    },
-    {
-      value: 22,
-      label: '女子1000米'
     },
     {
       value: 9,
@@ -206,10 +194,18 @@ const personalProjectData = {
     },
     {
       value: 19,
-      label: '男子铅球'
+      label: '男子立定跳远'
     },
     {
       value: 20,
+      label: '女子立定跳远'
+    },
+    {
+      value: 21,
+      label: '男子铅球'
+    },
+    {
+      value: 22,
       label: '女子铅球'
     },
   ],
@@ -220,7 +216,7 @@ const personalProjectData = {
     },
     {
       value: 24,
-      label: '女子*100米'
+      label: '女子4*100米'
     },
     {
       value: 25,
@@ -232,19 +228,15 @@ const personalProjectData = {
     },
     {
       value: 27,
-      label: '旋风跑'
+      label: '男女混合4*100米'
     },
     {
       value: 28,
-      label: '八人九足'
+      label: '悦“綦”飞兔'
     },
     {
       value: 29,
-      label: '男女混合4*400米'
-    },
-    {
-      value: 30,
-      label: '男女混合4*400米'
+      label: '挑战“NO1”'
     },
   ],
 

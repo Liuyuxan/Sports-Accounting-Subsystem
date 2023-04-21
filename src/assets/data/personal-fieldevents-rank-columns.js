@@ -5,7 +5,7 @@ const columns = [
     key: 'name'
   },
   {
-    title: '学院',
+    title: '学院/团队',
     key: 'collage'
   },
   // {
@@ -24,6 +24,10 @@ const columns = [
     title: '排名',
     key: 'rank'
   },
+  // {
+  //   title: '得分',
+  //   key: 'integral'
+  // },
 
 ]
 

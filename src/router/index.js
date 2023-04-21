@@ -25,6 +25,10 @@ const router = createRouter({
       component: () => import("@/views/teacherRank/teacherRank.vue"),
     },
     {
+      path: '/teamRank',
+      component: () => import("@/views/teamRank/teamRank.vue"),
+    },
+    {
       path: '/addStudentSportsMan',
       component: () => import("@/views/addStudentSportsMan/addStudentSportsMan.vue"),
     },

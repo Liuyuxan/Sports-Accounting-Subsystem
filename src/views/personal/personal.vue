@@ -2,7 +2,7 @@
 <template>
   <div class="personal title-center center">
 
-    <h2 class="project-title ">个人项目</h2>
+    <h2 class="project-title ">个人项目成绩提交</h2>
     <Form ref="formData" :model="formData.value" :label-width="50" style="width: 1000px">
       <div class="project top">
         <h2 class="name">选择信息</h2>
@@ -45,7 +45,7 @@
               <Row>
                 <Col>
                   <FormItem :label="'学号'+ Number(index + 1)">
-                    <Input v-model="item.id" placeholder="学号/工号" style="width: 200px" :readonly="isReadonly" />
+                    <Input v-model="item.numbers" placeholder="学号/工号" style="width: 200px" :readonly="isReadonly" />
                   </FormItem>
                 </Col>
                 <Col>
@@ -60,7 +60,7 @@
                 </Col>
                 <Col>
                   <FormItem :label="'成绩:'">
-                    <Input v-model="item.score" placeholder="成绩" style="width: 150px"/>
+                    <Input v-model="item.scores" placeholder="成绩" style="width: 150px"/>
                   </FormItem>
                 </Col>
                 <Col>
@@ -107,9 +107,10 @@ const formData = reactive({
       status: "",
       matchType: "",
       id: "",
+      numbers: "",
       department: "",
       name: "",
-      score: "",
+      scores: "",
     },
   ]
 })
@@ -128,7 +129,9 @@ const selectStatus = () => {
   requestInfo()
 }
 const selectMatchType = () => {
+  
   formData.infos[0].matchType = formRef.matchType.value
+  console.log(formRef.matchType.value)
   console.log("赛区已选择")
   requestInfo()
 }
@@ -144,6 +147,12 @@ const requestInfo = () => {
 
     infoStore.fetchSportsManInfosData(sportId, matchType, status).then(res => {
       formData.infos = sportsManInfos.value.infos  // 将响应式渲染到模板上的数组替换成网络请求到的数组
+      // 将网络请求到的运动员id换成numbers(后端要求)
+      console.log(typeof formData.infos);
+      for(const item of formData.infos) {
+        item.id = item.numbers
+      }
+    
     })
   }
 }
@@ -197,11 +206,12 @@ const submit = () => {
 
   // 循环判断成绩有数据的，只提交写了成绩的数据
   for (const item of formData.infos) {
-    if(item.score) {
+    if(item.scores) {
       result.push(item)
     }
   }
   console.log("提交的数组：", result)
+  console.log("原数组：", formData)
 
   // 发送数据
   YXrequest.post({

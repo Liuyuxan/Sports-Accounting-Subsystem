@@ -74,19 +74,19 @@ const personalProjectData = {
     },
     {
       value: 19,
-      label: '男子铅球'
+      label: '男子立定跳远'
     },
     {
       value: 20,
-      label: '女子铅球'
+      label: '女子立定跳远'
     },
     {
       value: 21,
-      label: '男子1000米'
+      label: '男子铅球'
     },
     {
       value: 22,
-      label: '女子1000米'
+      label: '女子铅球'
     },
   ],
   sportList1: [
@@ -121,14 +121,6 @@ const personalProjectData = {
     {
       value: 8,
       label: '女子800米'
-    },
-    {
-      value: 21,
-      label: '男子1000米'
-    },
-    {
-      value: 22,
-      label: '女子1000米'
     },
     {
       value: 9,
@@ -174,10 +166,18 @@ const personalProjectData = {
     },
     {
       value: 19,
-      label: '男子铅球'
+      label: '男子立定跳远'
     },
     {
       value: 20,
+      label: '女子立定跳远'
+    },
+    {
+      value: 21,
+      label: '男子铅球'
+    },
+    {
+      value: 22,
       label: '女子铅球'
     },
   ],

@@ -6,16 +6,16 @@
       <h2 class="name">选择项目</h2>
       <Select v-model="sportId" style="width:550px">
         <OptionGroup label="个人径赛">
-          <Option v-for="item in allSportsData.sportList1" :value="item.value" :key="item.value">{{ item.label }}</Option>
+          <Option v-for="item in teacherSports.sportList1" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </OptionGroup>
         <OptionGroup label="个人田赛">
-          <Option v-for="item in allSportsData.sportList2" :value="item.value" :key="item.value">{{ item.label }}</Option>
+          <Option v-for="item in teacherSports.sportList2" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </OptionGroup>
         <OptionGroup label="团队项目">
-          <Option v-for="item in allSportsData.sportList3" :value="item.value" :key="item.value">{{ item.label }}</Option>
+          <Option v-for="item in teacherSports.sportList3" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </OptionGroup>
       </Select>
-      
+
       <h2 class="matchType">选择赛区</h2>
       <Select v-model="matchType" style="width:550px">
         <Option v-for="item in infoType.matchType" :value="item.value" :key="item.value">{{ item.label }}</Option>
@@ -47,8 +47,9 @@
               <td>{{ item.department }}</td>
               <!-- <td>{{ item.specialty }}</td>
               <td>{{ item.classes }}</td> -->
-              <td>{{ item.score }}</td>
+              <td>{{ item.scores }}</td>
               <td>{{ item.ranking }}</td>
+              <!-- <td>{{ item.integral }}</td> -->
             </tr>
           </template>
         </tbody>
@@ -71,8 +72,9 @@
               <td>{{ item.department }}</td>
               <!-- <td>{{ item.specialty }}</td>
               <td>{{ item.classes }}</td> -->
-              <td>{{ item.score }}</td>
+              <td>{{ item.scores }}</td>
               <td>{{ item.ranking }}</td>
+              <!-- <td>{{ item.integral }}</td> -->
             </tr>
           </template>
         </tbody>
@@ -92,8 +94,9 @@
           <template v-for="item in teacherRankInfos" :key="item.id">
             <tr>
               <td>{{ item.department }}</td>
-              <td>{{ item.score }}</td>
+              <td>{{ item.scores }}</td>
               <td>{{ item.ranking }}</td>
+              <!-- <td>{{ item.integral }}</td> -->
             </tr>
           </template>
         </tbody>
@@ -105,7 +108,7 @@
 </template>
 
 <script setup>
-import allSportsData from "@/assets/data/all-sports"
+import teacherSports from "@/assets/data/teacher-sports"
 import useInfoStore from "@/stores/modules/infos"
 import { storeToRefs } from "pinia";
 import { ref } from "vue";

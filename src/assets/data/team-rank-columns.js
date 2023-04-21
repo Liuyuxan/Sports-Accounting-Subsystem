@@ -20,6 +20,10 @@ const columns = [
     title: '排名',
     key: 'rank'
   },
+  // {
+  //   title: '得分',
+  //   key: 'integral'
+  // },
 ]
 
 export default columns

@@ -1,7 +1,7 @@
 const columns = [
   //团队表头
   {
-    title: '队名',
+    title: '团队',
     key: 'collage'
   },
   {
@@ -12,6 +12,10 @@ const columns = [
     title: '排名',
     key: 'rank'
   },
+  // {
+  //   title: '得分',
+  //   key: 'integral'
+  // },
 ]
 
 export default columns

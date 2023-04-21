@@ -20,6 +20,10 @@
           <Icon type="ios-search" />
           教职工项目排名查询
         </MenuItem>
+        <MenuItem name="/teamRank" to="/teamRank">
+          <Icon type="ios-search" />
+          团队总积分排名
+        </MenuItem>
       </MenuGroup>
       <MenuGroup title="增加数据">
         <MenuItem name="/addStudentSportsMan" to="/addStudentSportsMan">

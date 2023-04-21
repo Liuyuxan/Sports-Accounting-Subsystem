@@ -6,13 +6,13 @@
       <h2 class="name">选择项目</h2>
       <Select v-model="sportId" style="width:550px">
         <OptionGroup label="个人径赛">
-          <Option v-for="item in allSportsData.sportList1" :value="item.value" :key="item.value">{{ item.label }}</Option>
+          <Option v-for="item in studentSports.sportList1" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </OptionGroup>
         <OptionGroup label="个人田赛">
-          <Option v-for="item in allSportsData.sportList2" :value="item.value" :key="item.value">{{ item.label }}</Option>
+          <Option v-for="item in studentSports.sportList2" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </OptionGroup>
         <OptionGroup label="团队项目">
-          <Option v-for="item in allSportsData.sportList3" :value="item.value" :key="item.value">{{ item.label }}</Option>
+          <Option v-for="item in studentSports.sportList3" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </OptionGroup>
       </Select>
       
@@ -47,8 +47,9 @@
               <td>{{ item.department }}</td>
               <!-- <td>{{ item.specialty }}</td>
               <td>{{ item.classes }}</td> -->
-              <td>{{ item.score }}</td>
+              <td>{{ item.scores }}</td>
               <td>{{ item.ranking }}</td>
+              <!-- <td>{{ item.integral }}</td> -->
             </tr>
           </template>
         </tbody>
@@ -71,8 +72,9 @@
               <td>{{ item.department }}</td>
               <!-- <td>{{ item.specialty }}</td>
               <td>{{ item.classes }}</td> -->
-              <td>{{ item.score }}</td>
+              <td>{{ item.scores }}</td>
               <td>{{ item.ranking }}</td>
+              <!-- <td>{{ item.integral }}</td> -->
             </tr>
           </template>
         </tbody>
@@ -92,8 +94,9 @@
           <template v-for="item in studentRankInfos" :key="item.id">
             <tr>
               <td>{{ item.department }}</td>
-              <td>{{ item.score }}</td>
+              <td>{{ item.scores }}</td>
               <td>{{ item.ranking }}</td>
+              <!-- <td>{{ item.integral }}</td> -->
             </tr>
           </template>
         </tbody>
@@ -105,7 +108,7 @@
 </template>
 
 <script setup>
-import allSportsData from "@/assets/data/all-sports"
+import studentSports from "@/assets/data/student-sports"
 import useInfoStore from "@/stores/modules/infos"
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
@@ -151,7 +154,7 @@ const download = () => {
   }).catch(err => {
     console.log("err:", err)
   })
-  
+
 }
 
 const downloadExcel = (UUID) => {
