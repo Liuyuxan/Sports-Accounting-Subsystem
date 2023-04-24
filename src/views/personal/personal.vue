@@ -173,7 +173,6 @@ const requestInfo = () => {
 //   console.log("添加一条信息,所有信息：", formData.infos)
 // }
 
-
 // 删除数据
 const deleteBtn = (index) => {
   console.log("删除前：",formData.infos)
@@ -203,6 +202,9 @@ const result = []  // 结果保存在此，提交此数组到后端
 const submit = () => {
   console.log(formData)
   console.log("已提交")
+  // for(const item of result) {
+  //   resultArr.push(item)
+  // }
 
   // 循环判断成绩有数据的，只提交写了成绩的数据
   for (const item of formData.infos) {
@@ -210,6 +212,7 @@ const submit = () => {
       result.push(item)
     }
   }
+
   console.log("提交的数组：", result)
   console.log("原数组：", formData)
 
@@ -230,6 +233,7 @@ const submit = () => {
     alert("提交成功")  // 提示用户信息已提交
     router.go(0)  // 刷新页面
   })
+
 }
 
 </script>

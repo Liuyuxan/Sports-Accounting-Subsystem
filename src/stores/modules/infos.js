@@ -38,7 +38,7 @@ const useInfoStore = defineStore('info', {
       const res = await getTeamInfos(id, type, status)
       this.teamInfos.infos = res.data
       console.log(res.data)
-    }
+    },
   }
 })
 

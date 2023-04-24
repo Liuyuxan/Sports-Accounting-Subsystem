@@ -33,7 +33,7 @@ const teacherSports = {
       label: '女子3000米'
     },
   ],
-  sportList1: [
+  sportList2: [
     {
       value: 19,
       label: '男子立定跳远'

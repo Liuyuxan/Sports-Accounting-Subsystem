@@ -176,11 +176,15 @@ const deleteBtn = (index) => {
 }
 
 const result = []  // 结果保存在此，提交此数组到后端
+let resultArr = [] // 上一次结果数组
+let newArr = []
 // 提交表单
 async function submit() {
   // 循环判断成绩有数据的，只提交写了成绩的数据
   console.log("formData.infos:", formData.infos)
-
+  for(const item of result) {
+    resultArr.push(item)
+  }
   // 循环判断成绩有数据的，只提交写了成绩的数据
   for (const item of formData.infos) {
     console.log(item.scores)
@@ -190,6 +194,7 @@ async function submit() {
   }
   console.log("提交的数组：", result)
 
+  newArr = getArrDifference(result, resultArr)
   // 发送数据
   YXrequest.post({
     url: "/SportInfo/submit/down",
@@ -212,6 +217,14 @@ async function submit() {
   })
 }
 
+const getArrDifference = (arr1, arr2) => {
+    return arr1.concat(arr2).filter(function(v, i, arr) {
+
+        return arr.indexOf(v) === arr.lastIndexOf(v)
+
+    });
+
+}
 
 </script>
 

@@ -52,7 +52,7 @@ const team = {
     },
     {
       value: 11,
-      label: '远景学院'
+      label: '戏剧影视学院'
     },
     {
       value: 12,

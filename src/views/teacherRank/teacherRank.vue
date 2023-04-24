@@ -110,6 +110,7 @@
 <script setup>
 import teacherSports from "@/assets/data/teacher-sports"
 import useInfoStore from "@/stores/modules/infos"
+import personalProjectData from "@/assets/data/personal-project"
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
 import mockRank from "@/mock/mock-rank"  // 引入模拟的数据

@@ -1,0 +1,1 @@
+const e=[{title:"姓名",key:"name"},{title:"学院/团队",key:"collage"},{title:"成绩(s)",key:"score"},{title:"排名",key:"rank"}],t=[{title:"姓名",key:"name"},{title:"学院/团队",key:"collage"},{title:"成绩(m)",key:"score"},{title:"排名",key:"rank"}],l=[{title:"团队",key:"collage"},{title:"成绩(s)",key:"score"},{title:"排名",key:"rank"}];export{t as a,l as b,e as c};
