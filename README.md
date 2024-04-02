@@ -1,6 +1,6 @@
 # sports-accounting-score
 
-校运动会计分系统，采用vue3、pinia、axios、vite、view design开发，已投入使用
+重庆邮电大学移通学院-校运动会计分系统，采用vue3、pinia、axios、vite、view design开发，已投入使用
 
 ### 安装依赖
 
