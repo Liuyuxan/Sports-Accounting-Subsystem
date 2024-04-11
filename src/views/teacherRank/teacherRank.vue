@@ -161,7 +161,7 @@ const download = () => {
 
 const downloadExcel = (UUID) => {
   console.log("111", UUID)
-  window.open(`http://10.0.6.17:8080/Excel/download/getExcel/${UUID}`)
+  window.open(`http://47.120.10.1:7890/Excel/download/getExcel/${UUID}`)
 }
 
 // 展示表头字段

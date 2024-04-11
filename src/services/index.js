@@ -1,1 +1,1 @@
-export * from "./modules/rankInfos"
+export * from "./modules/infos"

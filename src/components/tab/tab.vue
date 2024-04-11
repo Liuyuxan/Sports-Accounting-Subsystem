@@ -1,15 +1,20 @@
+<!--
+ * @Author: 秋意微醺时
+ * @Date: 2024-04-09 13:56:48
+ * @Description: 请填写说明
+-->
 <template>
   <div class="tab-bar">
     <Menu theme="light" :active-name="activeName" >
       <MenuGroup title="提交成绩">
         <MenuItem name="/personal" to="/personal">
           <Icon type="ios-man" />
-          个人项目成绩提交
+          项目成绩提交
         </MenuItem>
-        <MenuItem name="/team" to="/team">
+        <!-- <MenuItem name="/team" to="/team">
           <Icon type="ios-body" />
           团队项目成绩提交
-        </MenuItem>
+        </MenuItem> -->
       </MenuGroup>
       <MenuGroup title="查询">
         <MenuItem name="/studentRank" to="/studentRank">

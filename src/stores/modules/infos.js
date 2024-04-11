@@ -1,46 +1,46 @@
-import { defineStore } from 'pinia'
-import { getStudentRankInfos, getTeacherRankInfos, getInfos, getTeamInfos } from "@/services"
+import { defineStore } from "pinia";
+import { getAllSportMans, getAllSports, getAllTeam } from "@/services";
 
-const useInfoStore = defineStore('info', {
+const useInfoStore = defineStore("info", {
   state: () => ({
-    studentRankInfos: [],
-    teacherRankInfos: [],
-    sportsManInfos: [],
-    teamInfos: [{
-      id: 123454
-    }]
+    sportNames: [],
+    sportMans: [
+      {
+        name: "",
+        number: "",
+        departmentName: "",
+      },
+    ],
   }),
 
   actions: {
-    // 请求学生项目排名信息,type表示比赛类型:预赛或决赛
-    async fetchStudentRankInfosData(sportId, type) {
-      const res = await getStudentRankInfos(sportId, type)
-      this.studentRankInfos = res.data
-      console.log(res.data)
+    // 获取项目
+    async fetchAllSports(data) {
+      const res = await getAllSports(data);
+      this.sportNames = res.data;
+      // console.log("请求个人项目结果", this.sportNames);
     },
 
-    // 请求职工项目排名信息
-    async fetchTeacherRankInfosData(sportId, type) {
-      const res = await getTeacherRankInfos(sportId, type)
-      this.teacherRankInfos = res.data
-      console.log(res.data)
+    // 获取运动员
+    async fetchAllSportMans(data) {
+      const res = await getAllSportMans(data);
+      this.sportMans = res.data.rows;
+      // console.log("请求运动员结果", this.sportMans);
     },
 
-    // 请求运动员信息
-    async fetchSportsManInfosData(id, type, status) {
-      const res = await getInfos(id, type, status)
-      this.sportsManInfos.infos = res.data
-      console.log(res.data)
+     // 获取所有团队
+     async fetchAllTeam(data) {
+      const res = await getAllTeam(data);
+      this.sportMans = res.data;
+      // console.log("请求团队项目结果", this.sportNames);
     },
 
-    // 请求团队信息
-    async fetchTeamInfosData(id, type, status) {
-      const res = await getTeamInfos(id, type, status)
-      this.teamInfos.infos = res.data
-      console.log(res.data)
-    },
-  }
-})
+    // 删除运动员或团队
+    deleteLine(index) {
+      this.sportMans.splice(index, 1)
+    }
 
-export default useInfoStore
+  },
+});
 
+export default useInfoStore;

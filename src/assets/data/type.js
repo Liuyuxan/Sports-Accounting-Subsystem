@@ -1,21 +1,31 @@
 const type = {
   status: [
     {
-      value: '学生',
+      value: '1',
       label: '学生'
     },
     {
-      value: '职工',
-      label: '职工'
+      value: '2',
+      label: '教职工'
+    }
+  ],
+  sportType: [
+    {
+      value: '1',
+      label: '个人'
+    },
+    {
+      value: '2',
+      label: '团队'
     }
   ],
   matchType: [
     {
-      value: 0,
+      value: '1',
       label: '预赛'
     },
     {
-      value: 1,
+      value: '2',
       label: '决赛'
     }
   ]

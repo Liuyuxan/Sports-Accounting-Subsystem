@@ -1,30 +1,54 @@
-
 <template>
   <div class="personal title-center center">
-    
-    <h2 class="project-title ">增加学生运动员信息</h2>
-    <Form ref="formData" :model="formData.value" :label-width="50" style="width: 500px">
+    <h2 class="project-title">增加运动员</h2>
+    <Form
+      ref="formData"
+      :model="formData.value"
+      :label-width="50"
+      style="width: 500px"
+    >
       <div class="project top">
         <h2 class="name">选择信息</h2>
         <div class="project-inner">
-
           <FormItem label="项目">
-          <Select v-model="formRef.sportId.value" @on-change="selectProject" style="width:450px">
-            <OptionGroup label="径赛">
-              <Option v-for="item in personalProjectData.sportList1" :value="item.value" :key="item.value">{{ item.label }}</Option>
-            </OptionGroup>
-            <OptionGroup label="田赛">
-              <Option v-for="item in personalProjectData.sportList2" :value="item.value" :key="item.value">{{ item.label }}</Option>
-            </OptionGroup>
-          </Select>
-          </FormItem>
-
-          <FormItem label="赛区">
-            <Select v-model="formRef.classify.value" @on-change="selectMatchType" style="width:450px">
-              <Option v-for="item in infoType.matchType" :value="item.value" :key="item.value">{{ item.label }}</Option>
+            <Select
+              v-model="formRef.sportId.value"
+              @on-change="selectProject"
+              style="width: 450px"
+            >
+              <OptionGroup label="径赛">
+                <Option
+                  v-for="item in personalProjectData.sportList1"
+                  :value="item.value"
+                  :key="item.value"
+                  >{{ item.label }}</Option
+                >
+              </OptionGroup>
+              <OptionGroup label="田赛">
+                <Option
+                  v-for="item in personalProjectData.sportList2"
+                  :value="item.value"
+                  :key="item.value"
+                  >{{ item.label }}</Option
+                >
+              </OptionGroup>
             </Select>
           </FormItem>
 
+          <FormItem label="赛区">
+            <Select
+              v-model="formRef.classify.value"
+              @on-change="selectMatchType"
+              style="width: 450px"
+            >
+              <Option
+                v-for="item in infoType.matchType"
+                :value="item.value"
+                :key="item.value"
+                >{{ item.label }}</Option
+              >
+            </Select>
+          </FormItem>
         </div>
       </div>
 
@@ -35,62 +59,80 @@
         </div>
         <template v-for="(item, index) in formRef.infos.value" :key="index">
           <div class="content">
-              <Row>
-                <Col>
-                  <!-- <FormItem :label="'学号'+ Number(index + 1)"> -->
-                  <FormItem :label="'学号:'">
-                    <!-- 如果要把增加，删除按钮打开，请把输入框宽度改成266px -->
-                    <Input v-model="item.numbers" placeholder="学号" style="width: 450px" />    
-                  </FormItem>
-                </Col>
-                <Col>
-                  <FormItem :label="'姓名:'">
-                    <Input v-model="item.name" placeholder="姓名" style="width: 450px" />
-                  </FormItem>
-                </Col>
-                <Col>
-                  <FormItem :label="'性别:'">
-                    <Input v-model="item.sex" placeholder="男/女" style="width: 450px"/>
-                  </FormItem>
-                </Col>
-                <Col>
-                  <FormItem :label="'学院:'">
-                    <Input v-model="item.department" placeholder="学院" style="width: 450px" />
-                  </FormItem>
-                </Col>
-                <Col>
-                  <!-- <Button class="deleteBtn" @click="deleteBtn(index)" size="small">删除</Button> -->
-                </Col>
-              </Row>
+            <Row>
+              <Col>
+                <FormItem :label="'姓名:'">
+                  <Input
+                    @on-enter="nameEnter"
+                    v-model="item.name"
+                    placeholder="姓名"
+                    style="width: 450px"
+                  />
+                </FormItem>
+              </Col>
+              <Col>
+                <!-- <FormItem :label="'学号'+ Number(index + 1)"> -->
+                <FormItem :label="'学号:'">
+                  <!-- 如果要把增加，删除按钮打开，请把输入框宽度改成266px -->
+                  <Input
+                    v-model="item.numbers"
+                    placeholder="学号"
+                    style="width: 450px"
+                  />
+                </FormItem>
+              </Col>
+
+              <Col>
+                <FormItem :label="'性别:'">
+                  <Input
+                    v-model="item.sex"
+                    placeholder="男/女"
+                    style="width: 450px"
+                  />
+                </FormItem>
+              </Col>
+              <Col>
+                <FormItem :label="'学院:'">
+                  <Input
+                    v-model="item.department"
+                    placeholder="学院"
+                    style="width: 450px"
+                  />
+                </FormItem>
+              </Col>
+              <Col>
+                <!-- <Button class="deleteBtn" @click="deleteBtn(index)" size="small">删除</Button> -->
+              </Col>
+            </Row>
           </div>
         </template>
       </div>
 
       <div class="submit">
-        <Button type="primary" class="btn" @click="submit" style="width: 100px;">提交</Button>
+        <Button type="primary" class="btn" @click="submit" style="width: 100px"
+          >提交</Button
+        >
       </div>
-
     </Form>
-
   </div>
 </template>
 
 <script setup>
-import { ref, toRefs, reactive } from 'vue'
-import personalProjectData from "@/assets/data/personal-project"
-import infoType from "@/assets/data/type"
-import { FormItem } from 'view-ui-plus';
-import YXrequest from '@/services/request';
-import { useRouter } from 'vue-router';
+import { ref, toRefs, reactive } from "vue";
+import personalProjectData from "@/assets/data/personal-project";
+import infoType from "@/assets/data/type";
+import { FormItem } from "view-ui-plus";
+import YXrequest from "@/services/request";
+import { useRouter } from "vue-router";
 
-const currentIndex = ref(1)
-const router = useRouter()
+const currentIndex = ref(1);
+const router = useRouter();
 
 // 响应式
 const formData = reactive({
   sportId: "", // 运动项目
   type: "", // 人员类别
-  classify: "",  // 0为预赛，1为决赛(比赛类型)
+  classify: "", // 0为预赛，1为决赛(比赛类型)
   infos: [
     {
       sportId: "",
@@ -103,63 +145,75 @@ const formData = reactive({
       // specialty: "",  // 专业
       // classes: "", // 班级
     },
-  ]
-})
-const formRef = toRefs(formData)  // 使复杂的对象内部数据响应式
+  ],
+});
+const formRef = toRefs(formData); // 使复杂的对象内部数据响应式
 
 // 选择框选择完成触发
 const selectProject = () => {
-  formData.infos[0].sportId = formRef.sportId.value
-  console.log("项目已选择")
-}
+  formData.infos[0].sportId = formRef.sportId.value;
+  console.log("项目已选择");
+};
 const selectMatchType = () => {
-  formData.infos[0].classify = formRef.classify.value
-  console.log("赛区已选择")
-}
+  formData.infos[0].classify = formRef.classify.value;
+  console.log("赛区已选择");
+};
 
+const nameEnter = () => {
+  console.log(formData.infos[0].name, formData.sportId, formData.classify);
+
+  YXrequest.get({
+    url: `/Athlete/getByName/${formData.infos[0].name}/${formData.sportId}/${formData.classify}`,
+  }).then(res => {
+    const data = res.data
+    formData.infos[0].numbers = data.numbers
+    formData.infos[0].department = data.department
+    formData.infos[0].sex = data.sex
+    console.log(formData)
+  })
+  
+};
 
 // 添加数据
-const addBtnClick = () => {
-  currentIndex.value++
+// const addBtnClick = () => {
+//   currentIndex.value++;
 
-  formData.infos.push({
-    sportId: formRef.sportId.value,
-    type: formRef.type.value,
-    classify: formRef.classify.value,
-    numbers: "",
-    name: "",
-    sex: "",
-    department: "",
-    specialty: "",
-    calsses: "",
-  })
-  console.log("添加一条信息,所有信息：", formData.infos)
-}
-
+//   formData.infos.push({
+//     sportId: formRef.sportId.value,
+//     type: formRef.type.value,
+//     classify: formRef.classify.value,
+//     numbers: "",
+//     name: "",
+//     sex: "",
+//     department: "",
+//     specialty: "",
+//     calsses: "",
+//   });
+//   console.log("添加一条信息,所有信息：", formData.infos);
+// };
 
 // 删除数据
-const deleteBtn = (index) => {
-  formData.infos.splice(index, 1)
-  console.log("删除了一条信息,所剩信息：",formData.infos)
-}
+// const deleteBtn = (index) => {
+//   formData.infos.splice(index, 1);
+//   console.log("删除了一条信息,所剩信息：", formData.infos);
+// };
 
 // 提交
 const submit = () => {
-  console.log(typeof(formData.infos[0]), formData.infos[0])
-  console.log("已提交")
+  console.log(typeof formData.infos[0], formData.infos[0]);
+  console.log("已提交");
 
   // 发送数据
   YXrequest.post({
     url: "/Athlete/save",
-    data: formData.infos[0]
-  }).then(res => {
+    data: formData.infos[0],
+  }).then((res) => {
     console.log(res);
 
-    alert("提交成功")  // 提示用户信息已提交
-    router.go(0)  // 刷新页面
-  })
-}
-
+    alert("提交成功"); // 提示用户信息已提交
+    router.go(0); // 刷新页面
+  });
+};
 </script>
 
 <style lang="less" scoped>
@@ -169,8 +223,8 @@ const submit = () => {
       display: flex;
       flex-direction: column;
       .download {
-      position: relative;
-      right: -10px;
+        position: relative;
+        right: -10px;
       }
     }
   }
